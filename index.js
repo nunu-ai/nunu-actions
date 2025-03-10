@@ -31,7 +31,7 @@ async function main() {
   const token = core.getInput("token", { required: true });
   const repo_info = core.getInput("repo", { required: true });
   const event_type = core.getInput("event_type", { required: true });
-  const payload = core.getInput("payload", { required: true });
+  const payload = JSON.parse(core.getInput("payload", { required: true }));
   const [owner, repo] = repo_info.split("/");
 
   const octokit = github.getOctokit(token);
