@@ -25,6 +25,7 @@ async function waitForWorkflow(octokit, owner, repo, run_id) {
   }
 
   console.error("Maximum wait time reached.");
+  return { conclusion: "timed out", status: 500 };
 }
 
 async function main() {
@@ -76,6 +77,7 @@ async function main() {
     console.log("Foreign workflow completed successfully.");
   } else {
     console.error("Foreign workflow didn't complete successfully.");
+    core.setFailed(`Failure. Status ${status}, Conclusion ${conclusion}`);
   }
 }
 
