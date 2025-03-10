@@ -32,7 +32,7 @@ async function main() {
   const repo_info = core.getInput("repo", { required: true });
   const event_type = core.getInput("event_type", { required: true });
   const payload = core.getInput("payload", { required: true });
-  const [repo, owner] = repo_info.split("/");
+  const [owner, repo] = repo_info.split("/");
 
   const octokit = github.getOctokit(token);
   const context = github.context;
