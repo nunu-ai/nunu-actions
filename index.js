@@ -52,12 +52,14 @@ async function main() {
   console.log("Foreign workflow dispatched. Waiting for it to start...");
 
   await sleep(5000);
-  const runId = await octokit.rest.actions.listWorkflowRunsForRepo({
-    owner,
-    repo,
-    per_page: 1,
-    page: 1,
-  }).data.workflow_runs[0].id;
+  const runId = (
+    await octokit.rest.actions.listWorkflowRunsForRepo({
+      owner,
+      repo,
+      per_page: 1,
+      page: 1,
+    })
+  ).data.workflow_runs[0].id;
 
   console.log(
     `Waiting for workflow run ${runId} on ${repo_info} to complete...`,
