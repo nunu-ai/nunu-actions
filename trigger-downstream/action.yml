@@ -7,6 +7,12 @@ inputs:
   repo:
     description: "Target repository 'owner/name'"
     required: true
+  event_type:
+    description: "event_type to pass to dispatch event"
+    required: true
+  payload:
+    description: "Payload to pass to dispatch event"
+    required: true
 runs:
   using: "node20"
   main: "index.js"
