@@ -1,18 +1,21 @@
-name: "trigger-downstream"
-description: "Triggers a workflow in a downstream repository"
+name: "Set up s3 nix cache"
+description: "Sets up nunu nix cache with automatic signing and upload"
 inputs:
-  token:
-    description: "Personal Access Token for the downstreamrepository"
+  substituters:
+    description: Nix cache urls to use (space separated). First will be used to upload build outputs to
     required: true
-  repo:
-    description: "Target repository 'owner/name'"
+  trusted_public_keys:
+    description: Public keys of substitutors (space separated)
     required: true
-  event_type:
-    description: "event_type to pass to dispatch event"
+  secret_keys:
+    description: Secret keys for signing built outputs
     required: true
-  payload:
-    description: "Payload to pass to dispatch event"
+  aws_access_key_id:
+    description: Access key ID for downloading and uploading artifacts
+    required: true
+  aws_secret_access_key:
+    description: Secret access key for downloading and uploading artifacts
     required: true
 runs:
   using: "node20"
-  main: "index.js"
+  main: "index.ts"
