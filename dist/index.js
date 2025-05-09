@@ -42,14 +42,14 @@ var promises_1 = require("fs/promises");
 var process_1 = require("process");
 var TMP_PREFIX = "/tmp/nix-cache-action-";
 function system(cmd) {
-    var argv = cmd.split(" ");
-    var child = (0, child_process_1.spawn)(argv[0], argv.slice(1));
+    var child = (0, child_process_1.spawn)("/bin/bash", ["-c", cmd]);
     return new Promise(function (resolve, reject) {
         child.on("close", function (code) {
-            if (code !== null)
-                resolve(code);
-            else
+            if (code === null)
                 reject(new Error("command ".concat(cmd, " didn't exit correctly")));
+            else if (code !== 0)
+                reject(new Error("command ".concat(cmd, " exited with code ").concat(code)));
+            resolve();
         });
     });
 }

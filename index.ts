@@ -5,14 +5,16 @@ import { platform, arch } from "process";
 
 const TMP_PREFIX = "/tmp/nix-cache-action-";
 
-function system(cmd: string): Promise<number> {
-  const argv = cmd.split(" ");
-  const child = spawn(argv[0], argv.slice(1));
+function system(cmd: string): Promise<void> {
+  const child = spawn("/bin/bash", ["-c", cmd]);
 
   return new Promise((resolve, reject) => {
     child.on("close", (code) => {
-      if (code !== null) resolve(code);
-      else reject(new Error(`command ${cmd} didn't exit correctly`));
+      if (code === null)
+        reject(new Error(`command ${cmd} didn't exit correctly`));
+      else if (code !== 0)
+        reject(new Error(`command ${cmd} exited with code ${code}`));
+      resolve();
     });
   });
 }
