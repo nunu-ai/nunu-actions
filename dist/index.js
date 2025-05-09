@@ -174,7 +174,7 @@ function run() {
                     return [4 /*yield*/, system("sudo mkdir -p /etc/nix")];
                 case 3:
                     _b.sent();
-                    return [4 /*yield*/, system("sudo cat ".concat(configFName, " >> /etc/nix/nix.conf"))];
+                    return [4 /*yield*/, system("cat ".concat(configFName, " | sudo tee -a /etc/nix/nix.conf"))];
                 case 4:
                     _b.sent();
                     (0, core_1.info)("Restarting nix daemon...");

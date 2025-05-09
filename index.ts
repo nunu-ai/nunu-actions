@@ -123,7 +123,7 @@ async function run(): Promise<void> {
   const configFName = `${TMP_PREFIX}nix-config`;
   await writeFile(configFName, newConfig);
   await system("sudo mkdir -p /etc/nix");
-  await system(`sudo cat ${configFName} >> /etc/nix/nix.conf`);
+  await system(`cat ${configFName} | sudo tee -a /etc/nix/nix.conf`);
 
   info("Restarting nix daemon...");
   if (platform === "linux")
