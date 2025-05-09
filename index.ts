@@ -122,6 +122,14 @@ async function run(): Promise<void> {
   await writeFile(configFName, newConfig);
   await system("sudo mkdir -p /etc/nix");
   await system(`sudo cat ${configFName} >> /etc/nix/nix.conf`);
+
+  info("Restarting nix daemon...");
+  if (platform === "linux")
+    await system("sudo systemctl restart nix-daemon.service");
+  else if (platform === "darwin")
+    await system("sudo launchctl kickstart -k system/org.nixos.nix-daemon");
+
+  info("Done!");
 }
 
 async function cleanup(): Promise<void> {

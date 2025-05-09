@@ -177,6 +177,20 @@ function run() {
                     return [4 /*yield*/, system("sudo cat ".concat(configFName, " >> /etc/nix/nix.conf"))];
                 case 4:
                     _b.sent();
+                    (0, core_1.info)("Restarting nix daemon...");
+                    if (!(process_1.platform === "linux")) return [3 /*break*/, 6];
+                    return [4 /*yield*/, system("sudo systemctl restart nix-daemon.service")];
+                case 5:
+                    _b.sent();
+                    return [3 /*break*/, 8];
+                case 6:
+                    if (!(process_1.platform === "darwin")) return [3 /*break*/, 8];
+                    return [4 /*yield*/, system("sudo launchctl kickstart -k system/org.nixos.nix-daemon")];
+                case 7:
+                    _b.sent();
+                    _b.label = 8;
+                case 8:
+                    (0, core_1.info)("Done!");
                     return [2 /*return*/];
             }
         });
